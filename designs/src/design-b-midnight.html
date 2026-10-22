@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Rustico Menu: Midnight</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+  @page { size: 210mm 297mm; margin: 0; }
+  :root {
+    --bg: #161412;
+    --bg2: #201d1a;
+    --cream: #f3e9d9;
+    --soft: rgba(243, 233, 217, .62);
+    --orange: #e0672b;
+    --gold: #e9b54d;
+    --hair: rgba(243, 233, 217, .12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #444; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; color: var(--cream); font-family: "DM Sans", sans-serif; }
+  .page { width: 210mm; height: 297mm; position: relative; overflow: hidden; background: var(--bg); break-after: page; }
+
+  /* cover */
+  .cover { background: var(--orange); display: flex; flex-direction: column; }
+  .cover .top { flex: 1; position: relative; display: flex; align-items: center; justify-content: center;
+    background:
+      repeating-linear-gradient(45deg, rgba(0,0,0,.06) 0 2mm, transparent 2mm 9mm),
+      repeating-linear-gradient(-45deg, rgba(0,0,0,.06) 0 2mm, transparent 2mm 9mm),
+      #c95a22; }
+  .cover .top img { width: 120mm; }
+  .cover .bottom { height: 84mm; background: var(--bg); padding: 14mm 18mm; display: flex; align-items: flex-end; justify-content: space-between; }
+  .cover .big { font-family: "Bebas Neue", sans-serif; font-size: 120pt; line-height: .8; color: var(--cream); letter-spacing: .02em; }
+  .cover .meta { text-align: right; font-size: 8pt; letter-spacing: .3em; text-transform: uppercase; color: var(--soft); line-height: 2; }
+  .cover .meta b { color: var(--gold); font-weight: 700; }
+
+  /* inner */
+  .inner { display: grid; grid-template-columns: 24mm 1fr; }
+  .band { background: var(--orange); position: relative; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 12mm 0; }
+  .band .word { writing-mode: vertical-rl; transform: rotate(180deg); font-family: "Bebas Neue", sans-serif; font-size: 66pt; line-height: 1; color: var(--bg); letter-spacing: .04em; }
+  .band .pg { font-family: "Bebas Neue", sans-serif; font-size: 22pt; color: var(--bg); }
+  .band .logo { font-family: "Bebas Neue", sans-serif; font-size: 13pt; letter-spacing: .25em; writing-mode: vertical-rl; transform: rotate(180deg); color: var(--bg); }
+  .main { padding: 15mm 14mm 12mm 13mm; display: flex; flex-direction: column; min-height: 0; }
+  .cols { flex: 1; display: grid; grid-template-columns: 1fr 1fr; column-gap: 10mm; min-height: 0; }
+  .col { overflow: hidden; min-height: 0; }
+  .foot { padding-top: 3mm; border-top: .25mm solid var(--hair); display: flex; justify-content: space-between; font-size: 6.8pt; letter-spacing: .25em; text-transform: uppercase; color: var(--soft); }
+  .foot b { color: var(--gold); font-weight: 500; }
+
+  .sec { position: relative; margin: 0 0 3.5mm; padding-top: 2mm; }
+  .unit + .unit .sec { margin-top: 7mm; }
+  .sec .num { position: absolute; right: 0; top: -2mm; font-family: "Bebas Neue", sans-serif; font-size: 44pt; line-height: 1; color: transparent; -webkit-text-stroke: .3mm rgba(233,181,77,.45); }
+  .sec h2 { position: relative; font-family: "Bebas Neue", sans-serif; font-weight: 400; font-size: 27pt; line-height: .95; color: var(--orange); letter-spacing: .02em; padding-right: 16mm; }
+  .sec .note { position: relative; display: inline-block; margin-top: 1.5mm; font-size: 6.8pt; letter-spacing: .2em; text-transform: uppercase; color: var(--bg); background: var(--gold); padding: .6mm 2mm; border-radius: 3mm; font-weight: 700; }
+  .sec.cont { margin-bottom: 2mm; }
+  .sec.cont h2 { font-size: 15pt; color: var(--soft); }
+
+  .item { padding: 2.4mm 0 2.6mm; border-top: .25mm solid var(--hair); }
+  .item .row { display: flex; align-items: flex-start; justify-content: space-between; gap: 3mm; }
+  .item .n { font-weight: 700; font-size: 8.6pt; letter-spacing: .08em; text-transform: uppercase; line-height: 1.3; }
+  .item .p { font-family: "Bebas Neue", sans-serif; font-size: 15pt; line-height: 1; color: var(--gold); white-space: nowrap; }
+  .item .v { font-size: 6.6pt; letter-spacing: .16em; text-transform: uppercase; color: var(--orange); margin-top: .6mm; font-weight: 700; }
+  .item .d { font-size: 7.6pt; line-height: 1.42; color: var(--soft); margin-top: .7mm; padding-right: 8mm; }
+  .item .star { display: inline-block; margin-left: 1.5mm; font-size: 6pt; letter-spacing: .15em; padding: .4mm 1.6mm; border-radius: 3mm; background: var(--orange); color: var(--bg); vertical-align: 1px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 2mm; margin-bottom: 2mm; }
+  .chip { display: inline-flex; align-items: center; gap: 2mm; border: .25mm solid rgba(243,233,217,.25); border-radius: 5mm; padding: 1.3mm 2.6mm 1.1mm 3mm; font-size: 7.6pt; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; }
+  .chip b { font-family: "Bebas Neue", sans-serif; font-weight: 400; font-size: 12pt; color: var(--gold); letter-spacing: .02em; }
+
+  /* back */
+  .back { display: flex; flex-direction: column; align-items: center; justify-content: center; background:
+    radial-gradient(circle at 50% 40%, #2a2420 0, var(--bg) 70%); }
+  .back img { width: 90mm; }
+  .back .handle { margin-top: 10mm; font-family: "Bebas Neue", sans-serif; font-size: 22pt; letter-spacing: .12em; color: var(--orange); }
+</style>
+<script src="menu-data.js"></script>
+<script src="paginate.js"></script>
+</head>
+<body>
+<section class="page cover">
+  <div class="top"><img src="assets/logo.png" alt="Rustico, a multi-cuisine restaurant"></div>
+  <div class="bottom">
+    <div class="big">THE<br>MENU</div>
+    <div class="meta">Bar <b>·</b> Kitchen<br>Fort, Mumbai<br>@rusticomumbai</div>
+  </div>
+</section>
+<div id="flow"></div>
+<section class="page back">
+  <img src="assets/group-light.png" alt="Dhruvansh Hospitality LLP: more than restaurants, we create places people remember">
+  <div class="handle">@rusticomumbai</div>
+</section>
+<script>
+(async () => {
+  await document.fonts.ready;
+  const flow = document.getElementById("flow");
+  let pageNo = 1, secNo = 0;
+  const label = { bar: "Bar", food: "Kitchen" };
+  paginate({
+    sections: MENU,
+    newPage(part) {
+      pageNo++;
+      const page = el("section", "page inner");
+      page.innerHTML = `
+        <aside class="band"><span class="pg">${String(pageNo).padStart(2, "0")}</span><span class="word">${label[part]}</span><span class="logo">Rustico</span></aside>
+        <div class="main">
+          <div class="cols"><div class="col"></div><div class="col"></div></div>
+          <div class="foot"><span>${part === "food" ? "For Jain options, <b>please ask our staff</b>" : "Shaken, stirred <b>&amp;</b> blended"}</span><span>Prices in ₹</span></div>
+        </div>`;
+      flow.appendChild(page);
+      return { columns: [...page.querySelectorAll(".col")] };
+    },
+    renderHeading(sec, cont) {
+      if (cont) return el("div", "sec cont", `<h2>${sec.title} (cont.)</h2>`);
+      secNo++;
+      return el("div", "sec", `<span class="num">${String(secNo).padStart(2, "0")}</span><h2>${sec.title}</h2>${sec.note ? `<span class="note">${sec.note}</span>` : ""}`);
+    },
+    renderItem(it) {
+      return el("div", "item", `
+        <div class="row"><span class="n">${it.n}${it.star ? '<span class="star">Chef’s special</span>' : ""}</span><span class="p">${it.p}</span></div>
+        ${it.v ? `<div class="v">${it.v}</div>` : ""}${it.d ? `<div class="d">${it.d}</div>` : ""}`);
+    },
+    renderCompact(sec) {
+      const g = el("div", "chips");
+      sec.items.forEach(it => g.appendChild(el("span", "chip", `${it.n} <b>${it.p}</b>`)));
+      return g;
+    },
+  });
+  document.body.dataset.ready = "1";
+})();
+</script>
+</body>
+</html>

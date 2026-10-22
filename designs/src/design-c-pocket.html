@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Rustico Menu: Pocket</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Phone-shaped pages: readable on a phone after a QR scan without zooming. */
+  @page { size: 100mm 200mm; margin: 0; }
+  :root {
+    --bg: #eef0e6;
+    --card: #f8f8f2;
+    --olive: #2f3a26;
+    --olive2: #4d5c3d;
+    --muted: #6d7562;
+    --accent: #c0582a;
+    --hair: #d7dbc9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #777; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; color: var(--olive); font-family: "Outfit", sans-serif; }
+  a { color: inherit; text-decoration: none; }
+  .page { width: 100mm; height: 200mm; position: relative; overflow: hidden; background: var(--bg); break-after: page; }
+
+  /* cover */
+  .cover { background: var(--olive); color: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 12mm; }
+  .cover .plate { width: 72mm; height: 72mm; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2.2mm var(--olive), 0 0 0 2.6mm rgba(238,240,230,.4); }
+  .cover .plate img { width: 50mm; margin-top: 2mm; }
+  .cover h1 { font-family: "Fraunces", serif; font-weight: 400; font-size: 30pt; margin-top: 12mm; letter-spacing: .02em; }
+  .cover h1 i { color: #e6a57f; }
+  .cover p { font-size: 7.5pt; letter-spacing: .3em; text-transform: uppercase; opacity: .7; margin-top: 3mm; }
+  .cover .tap { position: absolute; bottom: 10mm; left: 0; right: 0; font-size: 7pt; letter-spacing: .2em; text-transform: uppercase; opacity: .65; }
+
+  /* index */
+  .index { padding: 8mm 7mm 6mm; }
+  .index h2 { font-family: "Fraunces", serif; font-weight: 600; font-size: 17pt; }
+  .index .sub { font-size: 7.2pt; color: var(--muted); margin: .8mm 0 2mm; }
+  .index .grp { font-size: 6.6pt; letter-spacing: .3em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 2.5mm 0 .4mm; }
+  #index-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2mm; }
+  .index .grp { grid-column: 1 / -1; }
+  .index a { display: flex; flex-direction: column; justify-content: space-between; min-height: 9.4mm; padding: 1.3mm 2.4mm; background: var(--card); border-radius: 2mm; font-size: 7.8pt; font-weight: 500; line-height: 1.2; }
+  .index a span:last-child { font-size: 6.4pt; color: var(--accent); font-weight: 400; margin-top: .8mm; }
+
+  /* inner */
+  .inner { padding: 6mm 7mm 6mm; display: flex; flex-direction: column; }
+  .top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 2.5mm; border-bottom: .25mm solid var(--hair); }
+  .top .brand { font-family: "Fraunces", serif; font-weight: 700; font-size: 9pt; letter-spacing: .3em; }
+  .top a { font-size: 6.6pt; letter-spacing: .15em; text-transform: uppercase; color: var(--bg); background: var(--olive2); padding: .9mm 2.4mm; border-radius: 3mm; }
+  .col { flex: 1; overflow: hidden; min-height: 0; padding-top: 4mm; }
+  .foot { display: flex; justify-content: space-between; padding-top: 2mm; border-top: .25mm solid var(--hair); font-size: 6.2pt; color: var(--muted); letter-spacing: .08em; }
+
+  .sec { margin: 0 0 2.5mm; }
+  .unit + .unit .sec { margin-top: 5mm; }
+  .sec .tag { display: inline-block; font-size: 6.2pt; letter-spacing: .25em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  .sec h2 { font-family: "Fraunces", serif; font-weight: 600; font-size: 16.5pt; line-height: 1.08; margin-top: .6mm; }
+  .sec .note { font-size: 7pt; color: var(--muted); margin-top: .6mm; }
+  .sec.cont h2 { font-size: 10pt; color: var(--muted); font-weight: 400; }
+
+  .item { background: var(--card); border-radius: 2.4mm; padding: 2.3mm 2.8mm 2.4mm; margin-bottom: 1.6mm; }
+  .item .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 2mm; }
+  .item .n { font-family: "Fraunces", serif; font-weight: 600; font-size: 9.6pt; line-height: 1.2; }
+  .item .p { font-weight: 600; font-size: 8.2pt; color: #fff; background: var(--accent); border-radius: 3mm; padding: .5mm 2mm; white-space: nowrap; }
+  .item .v { font-size: 6.6pt; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-top: .5mm; font-weight: 500; }
+  .item .d { font-size: 7.3pt; font-weight: 300; line-height: 1.38; color: var(--muted); margin-top: .6mm; }
+  .item .star { display: inline-block; font-family: "Outfit", sans-serif; font-size: 5.6pt; letter-spacing: .14em; text-transform: uppercase; background: var(--olive); color: var(--bg); padding: .3mm 1.4mm; border-radius: 2mm; margin-left: 1mm; vertical-align: 1px; font-weight: 500; }
+
+  .compact { background: var(--card); border-radius: 2.4mm; padding: 1.5mm 2.8mm; margin-bottom: 1.6mm; }
+  .compact .row { display: flex; justify-content: space-between; padding: 1.3mm 0; font-size: 8.4pt; border-bottom: .25mm dashed var(--hair); }
+  .compact .row:last-child { border-bottom: 0; }
+  .compact .row b { color: var(--accent); font-weight: 600; }
+
+  /* back */
+  .back { background: var(--olive); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8mm; }
+  .back img { width: 62mm; }
+  .back .handle { margin-top: 6mm; font-family: "Fraunces", serif; font-size: 12pt; color: #e6a57f; }
+</style>
+<script src="menu-data.js"></script>
+<script src="paginate.js"></script>
+</head>
+<body>
+<section class="page cover">
+  <div class="plate"><img src="assets/logo.png" alt="Rustico, a multi-cuisine restaurant"></div>
+  <h1>The <i>Menu</i></h1>
+  <p>Fort · Mumbai</p>
+  <div class="tap">Swipe or tap the index to explore</div>
+</section>
+<section class="page index" id="index">
+  <h2>What are you craving?</h2>
+  <div class="sub">Tap a section to jump straight to it.</div>
+  <div id="index-list"></div>
+</section>
+<div id="flow"></div>
+<section class="page back">
+  <img src="assets/group-light.png" alt="Dhruvansh Hospitality LLP: more than restaurants, we create places people remember">
+  <div class="handle">@rusticomumbai</div>
+</section>
+<script>
+(async () => {
+  await document.fonts.ready;
+  const flow = document.getElementById("flow");
+  let pageNo = 2, secNo = 0, current = null;
+  const where = [];
+  paginate({
+    sections: MENU,
+    breakBetweenParts: true,
+    newPage(part) {
+      pageNo++;
+      const page = el("section", "page inner");
+      page.innerHTML = `
+        <div class="top"><span class="brand">RUSTICO</span><a href="#index">☰ Index</a></div>
+        <div class="col"></div>
+        <div class="foot"><span>${part === "food" ? "Jain options? Ask our staff." : "Bar menu"}</span><span>₹ · ${pageNo}</span></div>`;
+      flow.appendChild(page);
+      current = pageNo;
+      return { columns: [page.querySelector(".col")] };
+    },
+    renderHeading(sec, cont) {
+      if (cont) return el("div", "sec cont", `<h2>${sec.title}, continued</h2>`);
+      secNo++;
+      const h = el("div", "sec", `<span class="tag">${sec.part === "bar" ? "Bar" : "Kitchen"} · ${String(secNo).padStart(2, "0")}</span><h2>${sec.title}</h2>${sec.note ? `<div class="note">${sec.note}</div>` : ""}`);
+      h.id = "sec-" + secNo;
+      where.push({ sec, id: h.id, el: h });
+      return h;
+    },
+    renderItem(it) {
+      return el("div", "item", `
+        <div class="row"><span class="n">${it.n}${it.star ? '<span class="star">Chef’s special</span>' : ""}</span><span class="p">₹${it.p}</span></div>
+        ${it.v ? `<div class="v">${it.v}</div>` : ""}${it.d ? `<div class="d">${it.d}</div>` : ""}`);
+    },
+    renderCompact(sec) {
+      const g = el("div", "compact");
+      sec.items.forEach(it => g.appendChild(el("div", "row", `<span>${it.n}</span><b>₹${it.p}</b>`)));
+      return g;
+    },
+  });
+  // Build the index now that every section has a page.
+  const list = document.getElementById("index-list");
+  let grp = null;
+  for (const w of where) {
+    if (w.sec.part !== grp) { grp = w.sec.part; list.appendChild(el("div", "grp", grp === "bar" ? "Bar" : "Kitchen")); }
+    const pg = w.el.closest(".page").querySelector(".foot span:last-child").textContent.split("· ")[1];
+    list.appendChild(el("a", null, `<span>${w.sec.title}</span><span>p. ${pg}</span>`)).href = "#" + w.id;
+  }
+  document.body.dataset.ready = "1";
+})();
+</script>
+</body>
+</html>

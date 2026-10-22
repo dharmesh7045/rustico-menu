@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Rustico Menu: Heritage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: 210mm 297mm; margin: 0; }
+  :root {
+    --paper: #f4ede1;
+    --ink: #2b211b;
+    --muted: #7a6a5c;
+    --accent: #b4521e;
+    --line: #d8c9b4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #8a8a8a; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; color: var(--ink); }
+  .page {
+    width: 210mm; height: 297mm; position: relative; overflow: hidden;
+    background: var(--paper); page-break-after: always; break-after: page;
+  }
+  .frame { position: absolute; inset: 9mm; border: .5mm solid var(--accent); }
+  .frame::after { content: ""; position: absolute; inset: 1.6mm; border: .2mm solid var(--accent); opacity: .6; }
+
+  /* cover */
+  .cover { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .cover img { width: 112mm; position: relative; }
+  .cover .word { font-family: "Cormorant Garamond", serif; font-weight: 500; letter-spacing: 1.4em; margin-right: -1.4em;
+    font-size: 15pt; color: var(--accent); margin-top: 14mm; }
+  .cover .rule { width: 40mm; height: .3mm; background: var(--accent); margin: 6mm auto; opacity: .7; }
+  .cover .place { font-family: "Jost", sans-serif; font-weight: 400; font-size: 8.5pt; letter-spacing: .35em; text-transform: uppercase; color: var(--muted); }
+
+  /* inner */
+  .inner { padding: 20mm 19mm 18mm; display: flex; flex-direction: column; }
+  .runhead { position: relative; display: flex; align-items: center; justify-content: space-between;
+    font-family: "Jost", sans-serif; font-size: 7pt; letter-spacing: .32em; text-transform: uppercase; color: var(--muted);
+    padding-bottom: 3mm; border-bottom: .2mm solid var(--line); }
+  .runhead .mark { font-family: "Cormorant Garamond", serif; font-size: 12pt; letter-spacing: .5em; color: var(--accent); font-weight: 600; }
+  .cols { position: relative; flex: 1; display: grid; grid-template-columns: 1fr 1fr; column-gap: 12mm; padding-top: 7mm; min-height: 0; }
+  .col { overflow: hidden; min-height: 0; }
+  .cols::before { content: ""; position: absolute; left: 50%; top: 9mm; bottom: 2mm; width: .2mm; background: var(--line); }
+  .foot { position: relative; display: flex; justify-content: space-between; align-items: center; padding-top: 3mm;
+    border-top: .2mm solid var(--line); font-family: "Jost", sans-serif; font-size: 6.8pt; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+  .foot .pg { font-family: "Cormorant Garamond", serif; font-size: 11pt; letter-spacing: 0; color: var(--accent); font-style: italic; }
+
+  .sec { margin: 1mm 0 4.5mm; }
+  .unit + .unit .sec { margin-top: 6mm; }
+  .sec .num { font-family: "Jost", sans-serif; font-size: 6.5pt; letter-spacing: .4em; color: var(--accent); text-transform: uppercase; }
+  .sec h2 { font-family: "Cormorant Garamond", serif; font-weight: 500; font-style: italic; font-size: 24pt; line-height: 1.05; margin-top: 1mm; }
+  .sec .note { font-family: "Jost", sans-serif; font-size: 7pt; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-top: 1.2mm; }
+  .sec .flour { display: block; width: 14mm; height: .4mm; background: var(--accent); margin-top: 2.2mm; }
+  .sec.cont { margin: 0 0 3mm; }
+  .sec.cont h2 { font-size: 13pt; color: var(--muted); }
+
+  .item { margin-bottom: 3.6mm; }
+  .item .row { display: flex; align-items: last baseline; gap: 2mm; }
+  .item .n { font-family: "Cormorant Garamond", serif; font-weight: 600; font-size: 12.2pt; line-height: 1.15; }
+  .item .lead { flex: 1; border-bottom: .3mm dotted #b8a68f; transform: translateY(-1.1mm); min-width: 4mm; }
+  .item .p { font-family: "Cormorant Garamond", serif; font-weight: 600; font-size: 12.2pt; color: var(--accent); white-space: nowrap; }
+  .item .v { font-family: "Jost", sans-serif; font-size: 7pt; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-top: .4mm; }
+  .item .d { font-family: "Jost", sans-serif; font-weight: 300; font-size: 8pt; line-height: 1.4; color: var(--muted); margin-top: .5mm; padding-right: 10mm; }
+  .item .star { font-family: "Jost", sans-serif; font-size: 6pt; letter-spacing: .2em; text-transform: uppercase; color: var(--paper); background: var(--accent); padding: .4mm 1.5mm; border-radius: 1mm; margin-left: 1.5mm; vertical-align: middle; }
+
+  .compact { display: grid; grid-template-columns: 1fr 1fr; column-gap: 6mm; row-gap: 1.6mm; margin-bottom: 3mm; }
+  .compact .row { display: flex; align-items: baseline; gap: 1.5mm; }
+  .compact .n { font-family: "Cormorant Garamond", serif; font-weight: 600; font-size: 11.5pt; }
+  .compact .lead { flex: 1; border-bottom: .3mm dotted #b8a68f; transform: translateY(-1mm); }
+  .compact .p { font-family: "Cormorant Garamond", serif; font-weight: 600; font-size: 11.5pt; color: var(--accent); }
+
+  /* back */
+  .back { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .back img { width: 92mm; position: relative; }
+  .back .handle { position: relative; margin-top: 9mm; font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 16pt; color: var(--accent); }
+</style>
+<script src="menu-data.js"></script>
+<script src="paginate.js"></script>
+</head>
+<body>
+<section class="page cover">
+  <div class="frame"></div>
+  <img src="assets/logo.png" alt="Rustico, a multi-cuisine restaurant">
+  <div class="word">MENU</div>
+  <div class="rule"></div>
+  <div class="place">Fort &nbsp;·&nbsp; Mumbai</div>
+</section>
+<div id="flow"></div>
+<section class="page back">
+  <div class="frame"></div>
+  <img src="assets/group-dark.png" alt="Dhruvansh Hospitality LLP: more than restaurants, we create places people remember">
+  <div class="handle">@rusticomumbai</div>
+</section>
+<script>
+(async () => {
+  await document.fonts.ready;
+  const flow = document.getElementById("flow");
+  let pageNo = 1, secNo = 0;
+  const label = { bar: "Bar Menu", food: "The Kitchen" };
+  paginate({
+    sections: MENU,
+    newPage(part) {
+      pageNo++;
+      const page = el("section", "page inner");
+      page.innerHTML = `
+        <div class="runhead"><span>${label[part]}</span><span class="mark">RUSTICO</span><span>Fort · Mumbai</span></div>
+        <div class="cols"><div class="col"></div><div class="col"></div></div>
+        <div class="foot"><span>${part === "food" ? "For Jain options, please ask our staff" : "All prices in ₹"}</span><span class="pg">${pageNo}</span><span>${part === "food" ? "All prices in ₹" : "@rusticomumbai"}</span></div>`;
+      flow.appendChild(page);
+      return { columns: [...page.querySelectorAll(".col")] };
+    },
+    renderHeading(sec, cont) {
+      if (cont) return el("div", "sec cont", `<h2>${sec.title}, continued</h2>`);
+      secNo++;
+      return el("div", "sec", `<div class="num">No. ${String(secNo).padStart(2, "0")}</div><h2>${sec.title}</h2>${sec.note ? `<div class="note">${sec.note}</div>` : ""}<span class="flour"></span>`);
+    },
+    renderItem(it) {
+      return el("div", "item", `
+        <div class="row"><span class="n">${it.n}${it.star ? '<span class="star">Chef’s special</span>' : ""}</span><span class="lead"></span><span class="p">${it.p}</span></div>
+        ${it.v ? `<div class="v">${it.v}</div>` : ""}${it.d ? `<div class="d">${it.d}</div>` : ""}`);
+    },
+    renderCompact(sec) {
+      const g = el("div", "compact");
+      sec.items.forEach(it => g.appendChild(el("div", "row", `<span class="n">${it.n}</span><span class="lead"></span><span class="p">${it.p}</span>`)));
+      return g;
+    },
+  });
+  document.body.dataset.ready = "1";
+})();
+</script>
+</body>
+</html>
